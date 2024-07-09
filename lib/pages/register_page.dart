@@ -1,3 +1,4 @@
+import 'package:chat_app/auth/auth_service.dart';
 import 'package:chat_app/components/button.dart';
 import 'package:chat_app/components/textfield.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,40 @@ class SignUpPage extends StatelessWidget {
     final TextEditingController passwordController = TextEditingController();
     final TextEditingController confirmController = TextEditingController();
 
-    void register() {}
+    void register() {
+      final authService = AuthService();
+
+      if (passwordController.text == confirmController.text) {
+        try {
+          authService.registerWithEmailPassword(
+            emailController.text,
+            passwordController.text,
+          );
+        } catch (e) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(
+                  e.toString(),
+                ),
+              );
+            },
+          );
+        }
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              title: Text(
+                "Passwords don't match",
+              ),
+            );
+          },
+        );
+      }
+    }
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
