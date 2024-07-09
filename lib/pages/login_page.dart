@@ -1,5 +1,7 @@
+import 'package:chat_app/auth/auth_service.dart';
 import 'package:chat_app/components/button.dart';
 import 'package:chat_app/components/textfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -16,7 +18,27 @@ class LoginPage extends StatelessWidget {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
 
-    void login() {}
+    void login() async {
+      final authService = AuthService();
+
+      try {
+        await authService.signWithEmailPassword(
+          emailController.text,
+          passwordController.text,
+        );
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(
+                e.toString(),
+              ),
+            );
+          },
+        );
+      }
+    }
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
