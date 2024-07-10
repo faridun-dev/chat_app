@@ -1,4 +1,5 @@
 import 'package:chat_app/auth/auth_service.dart';
+import 'package:chat_app/components/drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,6 +17,7 @@ class HomePage extends StatelessWidget {
         title: const Text(
           "Home",
         ),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: logout,
@@ -25,6 +27,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+      drawer: const MyDrawer(),
     );
   }
 }
